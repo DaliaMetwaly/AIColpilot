@@ -28,5 +28,6 @@ def masked_email(e, show=2):
     if not is_valid(e):
         return e                                # silently returns original if invalid
     lp, dom = e.split("@")
+    show = min(show, len(lp))  # Ensure 'show' does not exceed the length of the local part
     masked = lp[:show] + "*" * (len(lp) - show)
     return masked + "@" + dom
