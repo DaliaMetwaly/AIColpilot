@@ -11,7 +11,9 @@ def is_valid(address):
 
 def get_domain(addr):
     # returns everything after the last "@"
-    return addr[addr.rfind("@") + 1:]           # BUG: returns whole string if "@" missing
+    if not is_valid(addr):
+        return None                             # Return None for invalid input
+    return addr[addr.rfind("@") + 1:]
 
 def local_part(addr):
     return addr.split("@")[0]                   # lacks error handling for malformed addr
