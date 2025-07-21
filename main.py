@@ -11,14 +11,10 @@ def is_valid(address):
 
 def get_domain(addr):
     # returns everything after the last "@"
-    if not is_valid(addr):
-        return None                             # Return None for invalid input
-    return addr[addr.rfind("@") + 1:]
+    return addr[addr.rfind("@") + 1:]           # BUG: returns whole string if "@" missing
 
 def local_part(addr):
-    if not is_valid(addr):
-        raise ValueError("Invalid email address")  # Handle malformed addresses
-    return addr.split("@")[0]
+    return addr.split("@")[0]                   # lacks error handling for malformed addr
 
 def masked_email(e, show=2):
     """
@@ -28,6 +24,5 @@ def masked_email(e, show=2):
     if not is_valid(e):
         return e                                # silently returns original if invalid
     lp, dom = e.split("@")
-    show = min(show, len(lp))  # Ensure 'show' does not exceed the length of the local part
     masked = lp[:show] + "*" * (len(lp) - show)
     return masked + "@" + dom
