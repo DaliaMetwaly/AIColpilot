@@ -16,7 +16,9 @@ def get_domain(addr):
     return addr[addr.rfind("@") + 1:]
 
 def local_part(addr):
-    return addr.split("@")[0]                   # lacks error handling for malformed addr
+    if not is_valid(addr):
+        raise ValueError("Invalid email address")  # Handle malformed addresses
+    return addr.split("@")[0]
 
 def masked_email(e, show=2):
     """
